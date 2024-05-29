@@ -1,0 +1,34 @@
+{
+  "manifest_version":3,
+  "version":"1.0",
+  "name":"Test",
+"author":"MT",
+"description":"trying to make extension, for now only active in github.com",
+"content_scripts":[
+    {
+     "matches":["*://*.github.com/*"],
+     "js":["main.js"]
+    }
+  ],
+  "web_accessible_resources": [
+{
+"resources":["pp.jpg"],
+"matches": [],
+ "extension_ids": []
+}
+  ],"icons": {
+  "48": "icons8-hat-50.png",
+  "96": "icons8-hat-100.png"
+},"action":{
+"default_title":"Experiment 00",
+   "default_icon":{
+     "19":"icons8-skull-crossbones-30.png",
+     "38":"icons8-skull-crossbones-60.png"
+   }
+  },"background":{
+        "service_woker":"background.js"
+  },
+  "permissions":[
+      "tabs"
+  ]
+}
