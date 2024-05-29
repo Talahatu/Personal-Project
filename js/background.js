@@ -1,12 +1,14 @@
-if(typeof browser === "undefined"){
- var browser = chrome
-}
-const openTab=()=>{
-    console.log("Clicked!")
-    var newTab = browser.tabs.create({
-        url:'https://x.com/home',
-        active:true
-    })
+// This script act as a service worker alike
+// For Chromium based browser
+if (typeof browser === "undefined") {
+    var browser = chrome;
 }
 
-browser.browserAction.onClicked.addListener(openTab)
+const openTab = () => {
+    var newTab = browser.tabs.create({
+        url: "https://x.com/home",
+        active: true,
+    });
+};
+
+browser.browserAction.onClicked.addListener(openTab);
