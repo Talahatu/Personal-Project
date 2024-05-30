@@ -1,0 +1,34 @@
+:root {
+    --red: rgb(253, 77, 77);
+    --green: rgb(115, 248, 115);
+    --blue: rgb(85, 85, 253);
+}
+* {
+    color: white;
+}
+
+html {
+    padding: 0px;
+    margin: 0px;
+    background-color: var(--red);
+    width: 350px;
+    height: 400px;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    text-wrap: wrap;
+    display: grid;
+    justify-content: center;
+}
+
+.btn {
+    border-radius: 10px;
+    border: 1px solid --blue;
+    background-color: var(--blue);
+}
+
+h1 {
+    text-align: center;
+}

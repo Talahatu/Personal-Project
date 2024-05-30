@@ -1,0 +1,39 @@
+{
+    "manifest_version": 3,
+    "version": "1.0",
+    "name": "Personal Extension",
+    "author": "MT",
+    "description": "Trying to make extension, for now only work on Chromium based browser",
+    "minimum_chrome_version": "93",
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/main.js"]
+        }
+    ],
+    "host_permissions": ["http://*/*", "https://*/*"],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/pp.jpg"],
+            "matches": [],
+            "extension_ids": []
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "icons": {
+        "48": "assets/icons8-hat-50.png",
+        "96": "assets/icons8-hat-100.png"
+    },
+    "action": {
+        "default_title": "Experiment 00",
+        "default_icon": {
+            "19": "assets/icons8-skull-crossbones-30.png",
+            "38": "assets/icons8-skull-crossbones-60.png"
+        },
+        "default_popup": "popup/html/main.html"
+    },
+    "permissions": ["tabs", "storage", "scripting"]
+}
