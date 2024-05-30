@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "version": "1.0",
+    "name": "Personal Project",
+    "author": "MT",
+    "description": "Trying to make extension, for now only work on Chromium based browser. Made using Vite, TypeScript, and React",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Experiment 00",
+        "default_icon": {
+            "30": "icons8-skull-crossbones-30.png",
+            "60": "icons8-skull-crossbones-60.png"
+        }
+    },
+    "permissions": ["scripting", "tabs", "activeTab"],
+    "host_permissions": ["http://*/*", "https://*/*"],
+    "icons": {
+        "50": "icons8-hat-50.png",
+        "100": "icons8-hat-100.png"
+    }
+}
