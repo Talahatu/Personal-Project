@@ -12,7 +12,7 @@
             "60": "icons8-skull-crossbones-60.png"
         }
     },
-    "permissions": ["scripting", "tabs", "activeTab"],
+    "permissions": ["scripting", "tabs", "activeTab", "storage"],
     "host_permissions": ["http://*/*", "https://*/*"],
     "icons": {
         "50": "icons8-hat-50.png",

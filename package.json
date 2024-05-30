@@ -12,9 +12,12 @@
     },
     "dependencies": {
         "@types/chrome": "^0.0.268",
+        "@types/node": "^20.12.13",
+        "buffer": "^6.0.3",
         "npm-watch": "^0.13.0",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.23.1"
     },
     "devDependencies": {
         "@types/react": "^18.2.66",
