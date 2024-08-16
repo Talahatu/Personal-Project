@@ -63,12 +63,14 @@ function App() {
     //         .replace(/=+$/, "");
     // }
     const redirectToAuthCodeFlow = async (clientId: string, URI: string) => {
+        console.log("Redirect...");
+
         // TODO: Redirect to Spotify authorization page
         const verifier = generateCodeVerifier(16);
         // const challenge = await generateCodeChallenge(verifier);
 
         localStorage.setItem("verifier", verifier);
-        // chrome.storage.local.set({ verifier: verifier });
+        chrome.storage.local.set({ verifier: verifier });
 
         const params = new URLSearchParams();
         params.append("client_id", clientId);
@@ -82,7 +84,9 @@ function App() {
         // params.append("code_challenge", challenge);
         params.append("state", verifier);
 
-        document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
+        let url = `https://accounts.spotify.com/authorize?${params.toString()}`;
+        document.location = url;
+        // chrome.tabs.create({ url: url });
     };
 
     //======================= Authentication to Spotify =================================
@@ -94,7 +98,7 @@ function App() {
         URI: string
     ): Promise<string> => {
         // TODO: Get access token for code
-        const verifier = localStorage.getItem("verifier");
+        const verifier = await localStorage.getItem("verifier");
 
         console.log("Verfier:");
 
@@ -130,11 +134,26 @@ function App() {
         console.log("Access Token: ");
         console.log(access_token);
 
+        if (access_token) {
+            localStorage.setItem("token", access_token);
+            chrome.storage.local.set({ token: access_token });
+        }
+
         return access_token;
     };
 
     const fetchProfile = async (token: string): Promise<any> => {
         // TODO: Call Web API
+        console.log("PROFILE TOKEN: ");
+
+        console.log(token);
+        if (!token && localStorage.getItem("token")) {
+            token = localStorage.getItem("token")!;
+            chrome.storage.local.get("token", function (item) {
+                token = item["token"];
+            });
+        }
+
         const result = await fetch("https://api.spotify.com/v1/me", {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
