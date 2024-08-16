@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { Buffer } from "buffer";
@@ -7,29 +7,51 @@ import "./App.css";
 function App() {
     console.log("APP");
 
-    const [url, setURL] = useState("Placeholder");
+    // const [url, setURL] = useState("Placeholder");
     const clientID = "5963f3b37ff143208b1d3da4d7292616";
     const clientSecret = "4bf58e369c2a4615a04ca79041096ea9";
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
-    const redirectURI = "http://127.0.0.1:5173/";
+    const redirectURI = "http://localhost:5173/";
+    // let url: string = "";
+    let token: string = "";
+
+    chrome.runtime.sendMessage({ message: "INIT" }, function (result) {
+        console.log(result);
+    });
 
     const main = async () => {
         console.log("MAIN");
 
+        console.log("CODE: ");
+        console.log(code);
+
+        let accesstoken = localStorage.getItem("token");
+        console.log("Access Token: ");
+        console.log(accesstoken);
+
         if (!code) {
             console.log("IF");
-
             redirectToAuthCodeFlow(clientID, redirectURI);
         } else {
             console.log("ELSE");
+            let accesstoken = localStorage.getItem("token");
+            console.log("Access Token: ");
+            console.log(accesstoken);
+            if (!accesstoken) {
+                console.log("Not Access Token");
 
-            const token = await getAccessToken(
-                clientID,
-                clientSecret,
-                code,
-                redirectURI
-            );
+                token = await getAccessToken(
+                    clientID,
+                    clientSecret,
+                    code,
+                    redirectURI
+                );
+            } else {
+                token = accesstoken;
+            }
+            // document.location = "https://open.spotify.com/";
+
             const profile = await fetchProfile(token!!);
 
             console.log("User Profiles:");
@@ -85,8 +107,8 @@ function App() {
         params.append("state", verifier);
 
         let url = `https://accounts.spotify.com/authorize?${params.toString()}`;
-        document.location = url;
-        // chrome.tabs.create({ url: url });
+        // document.location = url;
+        chrome.tabs.create({ url: url });
     };
 
     //======================= Authentication to Spotify =================================
@@ -100,7 +122,7 @@ function App() {
         // TODO: Get access token for code
         const verifier = await localStorage.getItem("verifier");
 
-        console.log("Verfier:");
+        console.log("Verifier:");
 
         console.log(verifier);
 
@@ -162,15 +184,15 @@ function App() {
         return await result.json();
     };
 
-    const getURL = async () => {
-        let tabs = await chrome.tabs.query({
-            active: true,
-            currentWindow: true,
-        });
-        setURL(tabs[0].url!!);
-    };
+    // const getURL = async () => {
+    //     let tabs = await chrome.tabs.query({
+    //         active: true,
+    //         currentWindow: true,
+    //     });
+    //     url = tabs[0].url!!;
+    // };
 
-    main();
+    // main();
 
     return (
         <>
@@ -186,10 +208,10 @@ function App() {
                     />
                 </a>
             </div>
-            <h1 id="profile">Placeholder</h1>
+            <h1 id="profile">Get Your Shiz</h1>
             <div className="card">
-                <button onClick={() => getURL()}>Get Current URL</button>
-                <p id="result">{url}</p>
+                {/* <button onClick={() => getURL()}>Get Current URL</button>
+                <p id="result">{url}</p> */}
             </div>
             <p className="read-the-docs">Go to Spotify website playlist</p>
         </>
